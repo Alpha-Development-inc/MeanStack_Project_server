@@ -1,0 +1,4 @@
+{
+    "projectDBConnection" : "mongodb+srv://igorgolendukhin:qwertyTheFish@cluster0.2pg55.mongodb.net/projectDB?retryWrites=true&w=majority",
+    "jwtsecret" : "secret"
+}
