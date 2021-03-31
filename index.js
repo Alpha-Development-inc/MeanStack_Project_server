@@ -4,6 +4,7 @@ const authRoutes = require('./routes/api/authRoute');
 const postRoute = require('./routes/api/postRoute');
 const commentRoute = require('./routes/api/commentRoute');
 const messageRoute = require('./routes/api/messageRoute');
+const todoRoutes = require('./routes/api/CategorieRoute');
 
 const connectDB = require('./config/connectDB');
 
@@ -15,10 +16,12 @@ app.use(express.json());
 //allow cross origin requests
 app.use(cors());
 
+
 app.use('/api/auth', authRoutes);
 app.use('/api/posts', postRoute);
 app.use('/api/comments', commentRoute);
 app.use('/api/messages', messageRoute);
+app.use('/api/categories', todoRoutes);
 
 
 app.listen(4000, () => {
