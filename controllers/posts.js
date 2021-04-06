@@ -20,6 +20,7 @@ exports.createPost = async (req, res) => {
 
         const newPost = new Post({
             title: req.body.title,
+            category:req.body.category,
             country: req.body.country,
             description: req.body.description,
             user: req.user.id
