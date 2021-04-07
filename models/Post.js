@@ -5,6 +5,11 @@ const PostSchema = new mongoose.Schema({
         type: String,
         requred: true
     },
+    category:{
+        type:String,
+        required:true,
+        
+    },
     country:{
         type: String,
         required: true
