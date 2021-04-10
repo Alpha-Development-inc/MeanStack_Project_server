@@ -21,6 +21,7 @@ exports.createPost = async (req, res) => {
         const newPost = new Post({
             title: req.body.title,
             place: req.body.place,
+            category:req.body.category,
             country: req.body.country,
             description: req.body.description,
             lat: req.body.lat,
