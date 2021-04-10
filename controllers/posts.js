@@ -106,3 +106,14 @@ exports.likePost = async(req, res) => {
         res.status(500).send('Something is wrong with editing');
     }
 }
+
+exports.getUsersPosts = async(req, res) =>{
+    try{
+        const posts = await Post.find({
+            user: req.params.userId
+        }).exec();
+        res.status(200).send(posts);
+    }catch{
+        res.status(500).send('Cannot get posts of this user');
+    }
+}

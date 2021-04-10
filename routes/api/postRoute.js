@@ -23,5 +23,7 @@ router.put('/', auth, PostController.editPost);
 
 router.post('/likepost', auth, PostController.likePost);
 
+router.get('/postByUser/:userId', PostController.getUsersPosts);
+
 
 module.exports = router;
