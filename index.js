@@ -1,10 +1,12 @@
 const express = require('express');
+const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const authRoutes = require('./routes/api/authRoute');
 const postRoute = require('./routes/api/postRoute');
 const commentRoute = require('./routes/api/commentRoute');
 const messageRoute = require('./routes/api/messageRoute');
 const todoRoutes = require('./routes/api/CategorieRoute');
+const path = require('path');
 
 const connectDB = require('./config/connectDB');
 
@@ -13,6 +15,7 @@ const app = express();
 connectDB();
 
 app.use(express.json());
+app.use(express.static('images'));
 //allow cross origin requests
 app.use(cors());
 
