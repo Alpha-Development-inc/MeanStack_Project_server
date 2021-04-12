@@ -14,6 +14,8 @@
 - [x] Filter posts by user
 
 ### Herman:
+- [x] Notification system for likes, dislikes on post
+- [x] Tweet stream based on popular travelling tweets
 
 ### Olexander:
 - [x] Contact Us (saving message to the database and retrieving all messages)
