@@ -1,5 +1,4 @@
 const express = require('express');
-const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const authRoutes = require('./routes/api/authRoute');
 const postRoute = require('./routes/api/postRoute');
@@ -12,9 +11,6 @@ const trendingRoutes=require('./routes/api/trending');
 
 
 const app = express();
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 
 connectDB();
 
