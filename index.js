@@ -31,6 +31,7 @@ app.use('/api/top10',trendingRoutes);
 //app.use('/api/aboutus', aboutUsRoutes);
 
 
-app.listen(4000, () => {
-    console.log('Connected to the server');
+let port = process.env.PORT || 4000;
+app.listen(port, () => {
+  console.log('server started');
 });
