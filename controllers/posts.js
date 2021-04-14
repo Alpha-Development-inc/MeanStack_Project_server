@@ -26,7 +26,7 @@ exports.createPost = async (req, res) => {
             description: req.body.description,
             lat: req.body.lat,
             lng: req.body.lng,
-            userid: req.user.id,
+            userId: req.user.id,
             username: req.user.username
         });
 
@@ -71,6 +71,7 @@ exports.editPost = async (req, res) => {
             res.status(404).send("You don't have permission to edit post");
         } else {
             updatePost.title = req.body.title;
+        updatePost.title = req.body.title;
         updatePost.country = req.body.country;
         updatePost.place = req.body.place;
         updatePost.description = req.body.description;
