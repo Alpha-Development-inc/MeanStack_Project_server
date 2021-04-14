@@ -11,8 +11,7 @@ const PostSchema = new mongoose.Schema({
     },
     category:{
         type:String,
-        required:true,
-        
+        required:true,  
     },
     country:{
         type: String,
@@ -37,9 +36,13 @@ const PostSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    user:{
+    userId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users'
+    },
+    username:{
+        type: String,
+        required: true
     },
     comments: [{
         _id : false,

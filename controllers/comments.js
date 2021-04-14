@@ -62,7 +62,7 @@ exports.deleteComment = async(req, res) => {
             res.status(404).send('Post not found');
         }
         const comment = post.comments[req.body.commentindex];
-        if(post.user != req.user.id && comment.userId != req.user.id){
+        if(post.userId != req.user.id && comment.userId != req.user.id){
             res.status(404).send("You don't have permission to delete this post");
         }
         else{
@@ -83,7 +83,7 @@ exports.editComment = async(req, res)=> {
             res.status(404).send('Post not found');
         }
         const comment = post.comments[req.body.commentindex];
-        if(post.user != req.user.id && comment.userId != req.user.id){
+        if(post.userId != req.user.id && comment.userId != req.user.id){
             res.status(404).send("You don't have permission to edit this post");
         }
         else{

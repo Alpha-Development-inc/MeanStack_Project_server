@@ -26,7 +26,8 @@ exports.createPost = async (req, res) => {
             description: req.body.description,
             lat: req.body.lat,
             lng: req.body.lng,
-            user: req.user.id
+            userid: req.user.id,
+            username: req.user.username
         });
 
         if (req.file){
@@ -110,7 +111,7 @@ exports.likePost = async(req, res) => {
 exports.getUsersPosts = async(req, res) =>{
     try{
         const posts = await Post.find({
-            user: req.params.userId
+            userId: req.params.userId
         }).exec();
         res.status(200).send(posts);
     }catch{
