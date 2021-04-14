@@ -26,7 +26,7 @@ exports.createPost = async (req, res) => {
             description: req.body.description,
             lat: req.body.lat,
             lng: req.body.lng,
-            userid: req.user.id,
+            userId: req.user.id,
             username: req.user.username
         });
 
