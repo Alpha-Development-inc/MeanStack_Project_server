@@ -20,13 +20,22 @@ exports.createPost = async (req, res) => {
 
         const newPost = new Post({
             title: req.body.title,
+            place: req.body.place,
             category:req.body.category,
             country: req.body.country,
             description: req.body.description,
+            lat: req.body.lat,
+            lng: req.body.lng,
             user: req.user.id
         });
+
+        if (req.file){
+            const url = req.protocol + '://' + req.get('host');
+            newPost.imagePath = url + '/images/' + req.file.filename;
+        }
+
         const result = await newPost.save();
-        res.send(result);
+        res.status(201).send(result);
     }catch (err){
         res.status(500).send('Something is wrong with posting');
     }

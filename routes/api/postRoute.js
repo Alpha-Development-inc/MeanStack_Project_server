@@ -1,15 +1,14 @@
 const express = require('express');
-const { check, validationResult } = require('express-validator');
-
-let Post = require('../../models/Post');
+const { check } = require('express-validator');
 const router = express.Router();
 const auth = require('../../middleware/auth');
 const PostController = require('../../controllers/posts');
+const extractFile = require('../../middleware/file');
 
 
 router.get('/', PostController.getAllPosts);
 
-router.post('/', auth,
+router.post('/', auth, extractFile,
     [
         check('title', 'Title is required').not().isEmpty(),
         check('country', 'Choose the country').not().isEmpty(),

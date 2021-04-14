@@ -3,7 +3,11 @@ const mongoose = require('mongoose');
 const PostSchema = new mongoose.Schema({
     title:{
         type: String,
-        requred: true
+        required: true
+    },
+    place: {
+        type: String,
+        required: true
     },
     category:{
         type:String,
@@ -13,6 +17,17 @@ const PostSchema = new mongoose.Schema({
     country:{
         type: String,
         required: true
+    },
+    lat: { 
+        type: Number,
+        required: true
+    },
+    lng: { 
+        type: Number,
+        required: true
+    },
+    imagePath: { 
+        type: String
     },
     description:{
         type: String,
