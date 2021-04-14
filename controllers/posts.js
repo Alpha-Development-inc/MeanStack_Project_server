@@ -71,9 +71,13 @@ exports.editPost = async (req, res) => {
             res.status(404).send("You don't have permission to edit post");
         } else {
             updatePost.title = req.body.title;
-            updatePost.country = req.body.country;
-            updatePost.description = req.body.description;
-            updatePost.publicDate = req.body.publicDate;
+        updatePost.country = req.body.country;
+        updatePost.place = req.body.place;
+        updatePost.description = req.body.description;
+        updatePost.publicDate = req.body.publicDate;
+        updatePost.lat = req.body.lat;
+        updatePost.lng = req.body.lng;
+        updatePost.category = req.body.category;
 
             await updatePost.save();
             res.send(updatePost);
