@@ -5,9 +5,9 @@ const postRoute = require('./routes/api/postRoute');
 const commentRoute = require('./routes/api/commentRoute');
 const messageRoute = require('./routes/api/messageRoute');
 const categoryRoutes = require('./routes/api/categorieRoute');
-const filterPostRoutes = require('./routes/api/filterPost');
+const filterPostRoutes = require('./routes/api/filterPostRoute');
 const connectDB = require('./config/connectDB');
-const trendingRoutes=require('./routes/api/trending');
+const trendingRoutes=require('./routes/api/trendingRoute');
 
 
 const app = express();
