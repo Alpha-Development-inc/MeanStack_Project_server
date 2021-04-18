@@ -59,7 +59,7 @@ exports.login = async (req, res) => {
             {expiresIn: 60*30},
             (err, token) =>{
                 if(err) throw err;
-                res.json({token});
+                res.status(200).json({token: token, expiresIn: 1800, userId: user.id, username: user.username});
             }
         );
     }catch (err){
