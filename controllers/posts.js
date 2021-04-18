@@ -1,6 +1,12 @@
 const { validationResult } = require('express-validator');
-
 let Post = require('../models/Post');
+var ImageKit = require("imagekit");
+
+var imagekit = new ImageKit({
+    publicKey : "public_T51ZcieHu28tw3BLLJOsOlvmXg8=",
+    privateKey : "private_mgpxu3TS6vhtg66fad4avcyoA4A=",
+    urlEndpoint : "https://ik.imagekit.io/g56fnhdh8px/"
+});
 
 exports.getAllPosts = async (req, res) => {
     try {
@@ -30,10 +36,21 @@ exports.createPost = async (req, res) => {
             username: req.user.username
         });
 
-        if (req.file) {
-            const url = req.protocol + '://' + req.get('host');
-            newPost.imagePath = url + '/images/' + req.file.filename;
+        if (req.body.image) {
+            const resp = await imagekit.upload({
+                file : req.body.image,
+                fileName : Date.now(),
+            });
+
+            newPost.image = {
+                url: resp.url,
+                fileId: resp.fileId
+            }
+
+            console.log(resp);
         }
+
+
 
         const result = await newPost.save();
         res.status(201).send(result);
