@@ -3,16 +3,30 @@ const mongoose = require('mongoose');
 const PostSchema = new mongoose.Schema({
     title:{
         type: String,
-        requred: true
+        required: true
+    },
+    place: {
+        type: String,
+        required: true
     },
     category:{
         type:String,
-        required:true,
-        
+        required:true,  
     },
     country:{
         type: String,
         required: true
+    },
+    lat: { 
+        type: Number,
+        required: true
+    },
+    lng: { 
+        type: Number,
+        required: true
+    },
+    imagePath: { 
+        type: String
     },
     description:{
         type: String,
@@ -22,9 +36,13 @@ const PostSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    user:{
+    userId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'users'
+    },
+    username:{
+        type: String,
+        required: true
     },
     comments: [{
         _id : false,

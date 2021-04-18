@@ -1,4 +1,6 @@
 {
     "projectDBConnection" : "mongodb+srv://igorgolendukhin:qwertyTheFish@cluster0.2pg55.mongodb.net/projectDB?retryWrites=true&w=majority",
-    "jwtsecret" : "secret"
+    "jwtsecret" : "secret",
+    "badWordsUserId" : "boldalex",
+    "badWordsApiKey" : "FA083Sr0KmMgDipyYjl4VU97f2QDY9CfdM6stuqWID8R9FaP"
 }

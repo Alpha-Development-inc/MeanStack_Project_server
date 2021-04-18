@@ -6,6 +6,7 @@ module.exports = function(req, res, next){
 
     if(!token){
         res.status(400).json({msg: 'No token found'});
+        return;
     }
 
     try{

@@ -8,7 +8,7 @@ const CommentController = require('../../controllers/comments');
 
 router.post('/', auth,
     [
-        check('comment', 'Title is required').not().isEmpty()
+        check('comment', 'Comment cannot be empty').not().isEmpty()
     ],
     CommentController.createComment
 );

@@ -41,13 +41,9 @@ exports.login = async (req, res) => {
             res.status(400).json({errors: [{msg: 'Invalid email'}]});
         }
 
-
-        const passwordTry = await bcrypt.hash(password, 12);
-        // res.json({hashpass: user.password, newOne: passwordTry, original: password});
-
         const isMatch = await bcrypt.compare(password, user.password);
         if(!isMatch){
-            res.status(400).json({errors: [{msg: 'Invalid password', hash: passwordTry}]});
+            res.status(400).json({errors: [{msg: 'Invalid password'}]});
         }
 
         const payload ={

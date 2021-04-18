@@ -1,4 +1,6 @@
 const { validationResult } = require('express-validator');
+const axios = require('axios');
+const config = require('config');
 
 let Post = require('../models/Post');
 
@@ -11,7 +13,33 @@ exports.createComment = async (req, res) => {
 
         const post = await Post.findById(req.body.postID);
         if(!post){
-            res.status(404).send('Post not found');
+            res.status(404).json({msg:'Post not found'});
+            return;
+        }
+
+        const headers = {
+            "user-id" : config.get("badWordsUserId"),
+            "api-key" : config.get("badWordsApiKey"),
+            "Content-Type" : "application/json"
+        }
+
+        const censorCheck = await axios.post(
+            "https://neutrinoapi.net/bad-word-filter",
+            {
+                content: req.body.comment
+            },
+            {
+                headers: headers
+            }
+        );
+
+        const censorString = JSON.stringify(censorCheck.data);
+        const censorData = JSON.parse(censorString.replace(/-/g, '')); 
+
+        if (censorData.isbad){
+            const message = "Comment hasn't passed censorship. " + censorData.badwordstotal + " bad words inside.";
+            res.status(400).json({msg: message});
+            return;
         }
 
         const newComment = {
@@ -23,7 +51,7 @@ exports.createComment = async (req, res) => {
         const result = await post.save();
         res.send(result);
     }catch (err){
-        res.status(500).send('Server error');
+        res.status(500).json({err: err});
     }
 };
 
@@ -34,7 +62,7 @@ exports.deleteComment = async(req, res) => {
             res.status(404).send('Post not found');
         }
         const comment = post.comments[req.body.commentindex];
-        if(post.user != req.user.id && comment.userId != req.user.id){
+        if(post.userId != req.user.id && comment.userId != req.user.id){
             res.status(404).send("You don't have permission to delete this post");
         }
         else{
@@ -55,7 +83,7 @@ exports.editComment = async(req, res)=> {
             res.status(404).send('Post not found');
         }
         const comment = post.comments[req.body.commentindex];
-        if(post.user != req.user.id && comment.userId != req.user.id){
+        if(post.userId != req.user.id && comment.userId != req.user.id){
             res.status(404).send("You don't have permission to edit this post");
         }
         else{

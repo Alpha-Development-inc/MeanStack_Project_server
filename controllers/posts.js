@@ -12,88 +12,118 @@ exports.getAllPosts = async (req, res) => {
 };
 
 exports.createPost = async (req, res) => {
-    try{
+    try {
         const errors = validationResult(req);
-        if(!errors.isEmpty()){
-            res.status(422).json({errors: errors.array()});
+        if (!errors.isEmpty()) {
+            res.status(422).json({ errors: errors.array() });
         }
 
         const newPost = new Post({
             title: req.body.title,
-            category:req.body.category,
+            place: req.body.place,
+            category: req.body.category,
             country: req.body.country,
             description: req.body.description,
-            user: req.user.id
+            lat: req.body.lat,
+            lng: req.body.lng,
+            userId: req.user.id,
+            username: req.user.username
         });
+
+        if (req.file) {
+            const url = req.protocol + '://' + req.get('host');
+            newPost.imagePath = url + '/images/' + req.file.filename;
+        }
+
         const result = await newPost.save();
-        res.send(result);
-    }catch (err){
+        res.status(201).send(result);
+    } catch (err) {
         res.status(500).send('Something is wrong with posting');
     }
 };
 
-exports.deletePost = async(req, res) => {
-    try{
+exports.deletePost = async (req, res) => {
+    try {
         const deletePost = await Post.findById(req.body.id);
-        if(!deletePost){
+        if (!deletePost) {
             res.status(404).send('Post not found');
         }
-        if(deletePost.user != req.user.id){
+        if (deletePost.user != req.user.id) {
             res.status(404).send("You don't have permission to delete this post");
         }
-        else{
+        else {
             const result = await Post.findByIdAndDelete(req.body.id);
             res.send(result);
         }
-        
-    }catch (err){
+
+    } catch (err) {
         res.status(500).send('Something is wrong with deleting');
     }
 };
 
-exports.editPost = async(req, res)=> {
-    try{
+exports.editPost = async (req, res) => {
+    try {
         const updatePost = await Post.findById(req.body.id);
-        if (!updatePost){
+        if (!updatePost) {
             res.status(404).send('Post not found');
         }
+        if (updatePost.user != req.user.id) {
+            res.status(404).send("You don't have permission to edit post");
+        } else {
+            updatePost.title = req.body.title;
         updatePost.title = req.body.title;
-        updatePost.country = req. body.country;
+        updatePost.country = req.body.country;
+        updatePost.place = req.body.place;
         updatePost.description = req.body.description;
         updatePost.publicDate = req.body.publicDate;
+        updatePost.lat = req.body.lat;
+        updatePost.lng = req.body.lng;
+        updatePost.category = req.body.category;
 
-        await updatePost.save();
-        res.send(updatePost);
-    }catch (err){
+            await updatePost.save();
+            res.send(updatePost);
+        }
+    } catch (err) {
         res.status(500).send('Something is wrong with editing');
     }
 };
 
-exports.likePost = async(req, res) => {
-    try{
+exports.likePost = async (req, res) => {
+    try {
         const updatePost = await Post.findById(req.body.postID);
-        if (!updatePost){
+        if (!updatePost) {
             res.status(404).send('Post not found');
         }
 
         const likes = updatePost.likes;
         const like = likes.find(l => l.userId == req.user.id);
 
-        if (!like){
+        if (!like) {
             updatePost.likes.push({
                 userId: req.user.id,
                 username: req.user.username
             })
             await updatePost.save();
-            res.status(200).json({msg: 'like is created', userId: req.user.id});
+            res.status(200).json({ msg: 'like is created', userId: req.user.id });
         }
-        else{
+        else {
             updatePost.likes = updatePost.likes.filter(l => l.userId != req.user.id);
             updatePost.save();
-            res.status(200).json({msg: 'like is removed'});
+            res.status(200).json({ msg: 'like is removed' });
         }
 
-    }catch (err){
+    } catch (err) {
         res.status(500).send('Something is wrong with editing');
+    }
+}
+
+exports.getUsersPosts = async (req, res) => {
+    try {
+        const posts = await Post.find({
+            userId: req.params.userId
+        }).exec();
+        res.status(200).send(posts);
+    } catch {
+        res.status(500).send('Cannot get posts of this user');
     }
 }

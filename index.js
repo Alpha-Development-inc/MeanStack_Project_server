@@ -6,21 +6,16 @@ const commentRoute = require('./routes/api/commentRoute');
 const messageRoute = require('./routes/api/messageRoute');
 const categoryRoutes = require('./routes/api/categorieRoute');
 const filterPostRoutes = require('./routes/api/filterPost');
-const bodyParser = require('body-parser');
-//const contactUsRoutes=require('./routes/api/ContactUsFormRoute');
-//const aboutUsRoutes=require('./routes/api/AboutUsRoute');
 const connectDB = require('./config/connectDB');
 const trendingRoutes=require('./routes/api/trending');
 
 
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
 connectDB();
 
 app.use(express.json());
+app.use(express.static('images'));
 //allow cross origin requests
 app.use(cors());
 
@@ -36,6 +31,7 @@ app.use('/api/top10',trendingRoutes);
 //app.use('/api/aboutus', aboutUsRoutes);
 
 
-app.listen(4000, () => {
-    console.log('Connected to the server');
+let port = process.env.PORT || 4000;
+app.listen(port, () => {
+  console.log('server started');
 });
