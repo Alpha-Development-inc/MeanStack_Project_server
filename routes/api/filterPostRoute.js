@@ -10,7 +10,7 @@ router.get('/:category', async (req, res) => {
     }).exec();
     res.status(200).send(posts);
 } catch {
-    res.status(500).send('Cannot get posts of this user');
+    res.status(500).send('Cannot get posts of this category');
 }
   });
 module.exports = router;
