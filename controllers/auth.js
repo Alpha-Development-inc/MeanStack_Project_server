@@ -4,11 +4,18 @@ const config = require('config');
 
 const { validationResult } = require('express-validator');
 let User = require('../models/User');
+const { exists } = require('../models/User');
 
 exports.signup = async(req, res)=> {
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         res.status(422).json({errors: errors.array()});
+    }
+
+    let user = await User.findOne({email: req.body.email});
+    if(user){
+        res.status(400).json({msg: 'User with such email already exists!'});
+        return;
     }
 
     try{
@@ -20,7 +27,7 @@ exports.signup = async(req, res)=> {
         });
 
         await newUser.save();
-        res.status(201).json({msg: 'user was successfully created', hashpass: hashpass});
+        res.status(201).json({msg: 'user was successfully created'});
     }catch(err){
         res.status(500).send(err.message);
     }
@@ -38,12 +45,14 @@ exports.login = async (req, res) => {
     try{
         let user = await User.findOne({email});
         if(!user){
-            res.status(400).json({errors: [{msg: 'Invalid email'}]});
+            res.status(400).json({msg: 'User with such email doesn\'t exist!'});
+            return;
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if(!isMatch){
-            res.status(400).json({errors: [{msg: 'Invalid password'}]});
+            res.status(400).json({msg: 'Invalid credentials!'});
+            return;
         }
 
         const payload ={
