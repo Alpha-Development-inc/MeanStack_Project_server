@@ -61,7 +61,11 @@ const PostSchema = new mongoose.Schema({
         comment: {
             type: String,
             required: true
-        }
+        },
+        date:{
+            type: Date,
+            default: Date.now
+        },
     }],
     likes: [{
         _id : false,
