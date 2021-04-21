@@ -1,5 +1,6 @@
 const { validationResult } = require('express-validator');
 let Post = require('../models/Post');
+let User = require('../models/User');
 var ImageKit = require("imagekit");
 
 var imagekit = new ImageKit({
@@ -136,10 +137,15 @@ exports.likePost = async (req, res) => {
 
 exports.getUsersPosts = async (req, res) => {
     try {
+        let user = await User.findById(req.params.userId);
+        if(!user){
+            res.status(400).json({msg: 'User was not found'});
+            return;
+        }
         const posts = await Post.find({
             userId: req.params.userId
         }).exec();
-        res.status(200).send(posts);
+        res.status(200).json({username: user.username, posts: posts});
     } catch {
         res.status(500).send('Cannot get posts of this user');
     }
