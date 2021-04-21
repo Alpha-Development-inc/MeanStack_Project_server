@@ -25,9 +25,9 @@ exports.createMessage = async (req, res) => {
             user: req.user.id
         });
         const result = await newMessage.save();
-        res.send(result);
+        res.status(201).json({msg: "Message was successfully created"});
     }catch (err){
-        res.status(500).send('Something is wrong with posting');
+        res.status(500).json({msg: 'Something is wrong with creating message'});
     }
 };
 
