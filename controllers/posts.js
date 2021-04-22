@@ -18,6 +18,18 @@ exports.getAllPosts = async (req, res) => {
     }
 };
 
+exports.getPostById = async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.postID);
+        if (!post) {
+        return res.status(404).json({msg: 'Post not found'});
+        }
+        res.status(200).json({post: post});
+    } catch (err) {
+        res.status(500).send('Server error');
+    }
+};
+
 exports.createPost = async (req, res) => {
     try {
         const errors = validationResult(req);
@@ -66,12 +78,12 @@ exports.deletePost = async (req, res) => {
         if (!deletePost) {
             res.status(404).send('Post not found');
         }
-        if (deletePost.user != req.user.id) {
+        if (deletePost.userId != req.user.id) {
             res.status(404).send("You don't have permission to delete this post");
         }
         else {
             const result = await Post.findByIdAndDelete(req.body.id);
-            res.send(result);
+            res.status(204).json({msg: 'Post was successfully deleted'});
         }
 
     } catch (err) {
@@ -85,7 +97,7 @@ exports.editPost = async (req, res) => {
         if (!updatePost) {
             res.status(404).send('Post not found');
         }
-        if (updatePost.user != req.user.id) {
+        if (updatePost.userId != req.user.id) {
             res.status(404).send("You don't have permission to edit post");
         } else {
             updatePost.title = req.body.title;
@@ -98,8 +110,8 @@ exports.editPost = async (req, res) => {
         updatePost.lng = req.body.lng;
         updatePost.category = req.body.category;
 
-            await updatePost.save();
-            res.send(updatePost);
+        await updatePost.save();
+        res.status(200).json({msg: 'Post was successfully edited'});
         }
     } catch (err) {
         res.status(500).send('Something is wrong with editing');

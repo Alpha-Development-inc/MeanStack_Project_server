@@ -49,9 +49,9 @@ exports.createComment = async (req, res) => {
         };
         post.comments.push(newComment);
         const result = await post.save();
-        res.send(result);
+        res.status(201).json({msg: 'Cooment was successfully created'});
     }catch (err){
-        res.status(500).json({err: err});
+        res.status(500).json({msg: err});
     }
 };
 
