@@ -1,0 +1,12 @@
+.countryRow{
+
+    display: flex;
+justify-content: space-around;
+
+}
+
+.detailSection{
+
+    padding-top: 15px;
+
+}

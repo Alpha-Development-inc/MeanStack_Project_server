@@ -232,31 +232,29 @@ const CreatePostForm = (props) => {
                     </Grid> */}
 
 
-                    <Box display="flex" flexDirection="column" 
-                    width={width > 1023 ? "60%" : "100%" } maxWidth="320px">
 
                     <Box display="flex" flexDirection="row" alignItems="center"
-                     width="100%" justifyContent="space-between" marginTop="20px">
+                     width="80%" marginTop="20px">
                         <Typography variant="h6">Post Title:</Typography>
-                        <Box width="60%">
-                            <TextField required variant="outlined" label="Title" size="small" fullWidth
+                        <Box marginLeft="10px">
+                            <TextField required variant="outlined" label="Title" size="small"
                                 name="title" onChange={handleChange} value={post.title}/>
                         </Box>
                     </Box>
 
                     <Box display="flex" flexDirection="row" alignItems="center"
-                     width="100%" justifyContent="space-between" marginTop="20px">
+                     width="80%" marginTop="20px">
                         <Typography variant="h6">Place:</Typography>
-                        <Box width="60%">
-                            <TextField required variant="outlined" label="Place" size="small" fullWidth
+                        <Box marginLeft="10px">
+                            <TextField required variant="outlined" label="Place" size="small"
                                 name="place" onChange={handleChange} value={post.place}/>
                         </Box>
                     </Box>
 
                     <Box display="flex" flexDirection="row" alignItems="center"
-                     width="100%" justifyContent="space-between" marginTop="20px">
+                     width="80%" marginTop="20px">
                         <Typography variant="h6">Country:</Typography>
-                        <Box width="60%">
+                        <Box marginLeft="10px">
                             <FormControl variant="outlined" size="small" fullWidth>
                                 <Select
                                 name="country"
@@ -272,10 +270,10 @@ const CreatePostForm = (props) => {
                     </Box>
 
                     <Box display="flex" flexDirection="row" alignItems="center"
-                     width="100%" justifyContent="space-between" marginTop="20px">
+                     width="80%" marginTop="20px">
                         <Typography variant="h6">Category:</Typography>
-                        <Box width="60%">
-                            <FormControl variant="outlined" size="small" fullWidth>
+                        <Box marginLeft="10px">
+                            <FormControl variant="outlined" size="small">
                                 <Select
                                 name="category"
                                 value={post.category}
@@ -286,8 +284,6 @@ const CreatePostForm = (props) => {
                                 </Select>
                             </FormControl>
                         </Box>
-                    </Box>
-
                     </Box>
 
                     <Box width="100%" marginTop="20px">

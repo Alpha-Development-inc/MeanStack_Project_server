@@ -129,7 +129,7 @@ const Header = (props) => {
                     </div>
                     </Drawer>
                     <Typography variant="h6" className="header">
-                        Sifili
+                        FindUsThere
                     </Typography>
 
                     <span className="spacer"/>
